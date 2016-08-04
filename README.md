@@ -1,0 +1,1 @@
+My solutions to problems from exercism.io - mostly Ruby, Scala and Elixir

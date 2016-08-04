@@ -1,0 +1,3 @@
+class Pangram
+
+end
