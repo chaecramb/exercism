@@ -3,12 +3,12 @@ module BookKeeping
 end
 
 class Pangram
-  ALPHA = [*("a".."z")]
+  ALPHABET = [*("a".."z")]
 
-  def self.is_pangram?(str)
-    return false if str.empty?
-    test_str = str.downcase
+  def self.is_pangram?(sentence)
+    return false if sentence.empty?
+    sentence = sentence.downcase
 
-    ALPHA.reduce(false) {|_, l| test_str.include?(l) ? true : (return false)}
+    ALPHABET.all?{|c| sentence.include?(c)}
   end
 end
