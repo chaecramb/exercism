@@ -4,4 +4,4 @@
 
 
 def hello(name='World'):
-    return "Hello, " + name + "!"
+    return "Hello, {}!".format(name)
