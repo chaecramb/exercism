@@ -6,9 +6,7 @@ class Pangram
   ALPHABET = [*("a".."z")]
 
   def self.is_pangram?(sentence)
-    return false if sentence.empty?
     sentence = sentence.downcase
-
     ALPHABET.all?{|c| sentence.include?(c)}
   end
 end
