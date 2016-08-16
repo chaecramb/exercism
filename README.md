@@ -1,1 +1,1 @@
-My solutions to problems from exercism.io - mostly Ruby, Scala and Elixir
+My solutions to problems from exercism.io - so far Ruby, Python, Scala and Elixir
