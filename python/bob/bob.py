@@ -1,11 +1,21 @@
 import re
 
-def hey(what):
-  what = what.strip()
-  if what == '':
+def hey(phrase):
+  phrase = phrase.strip()
+  if is_silence(phrase):
     return 'Fine. Be that way!'
-  elif re.search('[a-zA-Z]', what) and what == what.upper():
+  elif is_shouting(phrase):
     return "Whoa, chill out!"
-  elif what.endswith('?'):
+  elif is_question(phrase):
     return "Sure."
   return "Whatever."
+
+def is_silence(phrase):
+  return phrase == ''
+
+def is_shouting(phrase):
+  return re.search('[a-zA-Z]', phrase) and phrase == phrase.upper()
+
+def is_question(phrase):
+  return phrase.endswith('?')
+
