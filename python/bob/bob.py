@@ -1,5 +1,3 @@
-import re
-
 def hey(phrase):
   phrase = phrase.strip()
   if is_silence(phrase):
@@ -14,7 +12,7 @@ def is_silence(phrase):
   return phrase == ''
 
 def is_shouting(phrase):
-  return re.search('[a-zA-Z]', phrase) and phrase == phrase.upper()
+  return phrase.isupper()
 
 def is_question(phrase):
   return phrase.endswith('?')
