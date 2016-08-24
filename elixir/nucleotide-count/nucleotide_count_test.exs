@@ -8,7 +8,6 @@ ExUnit.configure exclude: :pending, trace: true
 defmodule DNATest do
   use ExUnit.Case
 
-  # @tag :pending
   test "empty dna string has no adenosine" do
     assert DNA.count('', ?A) == 0
   end
