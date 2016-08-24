@@ -1,13 +1,21 @@
 defmodule DNA do
   @nucleotides [?A, ?C, ?G, ?T]
 
+  @doc """
+  Raises an ArgumentError for an invalid strand.
+  """
   def validate_strand!(strand) do
     Enum.each(strand, &validate_nucleotide!/1)
   end
 
+
+  @doc """
+  Raises an ArgumentError for an invalid nucleotide.
+  """
   def validate_nucleotide!(nucleotide) do
     unless nucleotide in @nucleotides, do: raise ArgumentError
   end
+
 
   @doc """
   Counts individual nucleotides in a DNA strand.
@@ -25,14 +33,7 @@ defmodule DNA do
     validate_strand!(strand)
     validate_nucleotide!(nucleotide)
 
-    count_matches = fn 
-      n, acc -> if n == nucleotide, do: acc + 1, else: acc 
-    end
-
-    case {strand, nucleotide} do
-      {'', _} -> 0
-      {strand, _} -> List.foldl(strand, 0, count_matches)
-    end
+    Enum.count(strand, &(&1 == nucleotide))
   end
 
 
