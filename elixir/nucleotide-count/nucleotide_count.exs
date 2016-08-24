@@ -47,9 +47,6 @@ defmodule DNA do
   """
   @spec histogram([char]) :: map
   def histogram(strand) do
-    validate_strand!(strand)
-
-    nucleotides = %{?A => 0, ?T => 0, ?C => 0, ?G => 0}
-    for {n, _} <- nucleotides, into: %{}, do: {n, DNA.count(strand, n)}
+    for n <- @nucleotides, into: %{}, do: {n, DNA.count(strand, n)}
   end
 end
