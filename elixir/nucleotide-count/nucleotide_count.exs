@@ -1,12 +1,12 @@
 defmodule DNA do
   @nucleotides [?A, ?C, ?G, ?T]
 
-  def valid_strand?(strand) do
-    length(Enum.filter(strand, &valid_nucleotide?/1)) == length(strand)
+  def validate_strand!(strand) do
+    Enum.each(strand, &validate_nucleotide!/1)
   end
 
-  def valid_nucleotide?(nucleotide) do
-    Enum.member?(@nucleotides, nucleotide)
+  def validate_nucleotide!(nucleotide) do
+    unless nucleotide in @nucleotides, do: raise ArgumentError
   end
 
   @doc """
@@ -22,9 +22,8 @@ defmodule DNA do
   """
   @spec count([char], char) :: non_neg_integer
   def count(strand, nucleotide) do
-    unless valid_strand?(strand) and valid_nucleotide?(nucleotide) do 
-      raise ArgumentError 
-    end
+    validate_strand!(strand)
+    validate_nucleotide!(nucleotide)
 
     count_matches = fn 
       n, acc -> if n == nucleotide, do: acc + 1, else: acc 
@@ -47,7 +46,7 @@ defmodule DNA do
   """
   @spec histogram([char]) :: map
   def histogram(strand) do
-    unless valid_strand?(strand), do: raise ArgumentError
+    validate_strand!(strand)
 
     nucleotides = %{?A => 0, ?T => 0, ?C => 0, ?G => 0}
     for {n, _} <- nucleotides, into: %{}, do: {n, DNA.count(strand, n)}
