@@ -2,22 +2,6 @@ defmodule DNA do
   @nucleotides [?A, ?C, ?G, ?T]
 
   @doc """
-  Raises an ArgumentError for an invalid strand.
-  """
-  def validate_strand!(strand) do
-    Enum.each(strand, &validate_nucleotide!/1)
-  end
-
-
-  @doc """
-  Raises an ArgumentError for an invalid nucleotide.
-  """
-  def validate_nucleotide!(nucleotide) do
-    unless nucleotide in @nucleotides, do: raise ArgumentError
-  end
-
-
-  @doc """
   Counts individual nucleotides in a DNA strand.
 
   ## Examples
@@ -30,8 +14,9 @@ defmodule DNA do
   """
   @spec count([char], char) :: non_neg_integer
   def count(strand, nucleotide) do
-    validate_strand!(strand)
-    validate_nucleotide!(nucleotide)
+    unless valid_strand?(strand) and valid_nucleotide?(nucleotide) do 
+      raise ArgumentError
+    end
 
     Enum.count(strand, &(&1 == nucleotide))
   end
@@ -48,5 +33,13 @@ defmodule DNA do
   @spec histogram([char]) :: map
   def histogram(strand) do
     for n <- @nucleotides, into: %{}, do: {n, DNA.count(strand, n)}
+  end
+
+  defp valid_strand?(strand) do
+    Enum.all?(strand, &valid_nucleotide?/1)
+  end
+
+  defp valid_nucleotide?(nucleotide) do
+    nucleotide in @nucleotides
   end
 end
