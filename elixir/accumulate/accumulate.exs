@@ -15,12 +15,9 @@ defmodule Accumulate do
 
   """
   @spec accumulate(list, (any -> any)) :: list
-  def accumulate(list, fun) do
-    accumulate_loop([], list, fun)
-  end
-
-  defp accumulate_loop(new, [], _), do: Enum.reverse(new)
-  defp accumulate_loop(new, rem, fun) do
-    accumulate_loop([fun.(hd(rem))] ++ new, tl(rem), fun)
+  def accumulate([], _fun), do: []
+  
+  def accumulate([head | tail], fun) do
+    [fun.(head) | accumulate(tail, fun)]
   end
 end
