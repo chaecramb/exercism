@@ -10,26 +10,19 @@ defmodule RunLengthEncoder do
   def encode(""), do: ""
   def encode(string) do
     string 
-    |> String.to_charlist 
+    |> String.to_charlist
+    |> Enum.reverse 
     |> do_encode 
-    |> runs_to_string 
-    |> List.flatten 
     |> String.Chars.to_string
   end
   
-  defp do_encode(charlist), do: count_runs(hd(charlist), tl(charlist), 1, [])
+  defp do_encode(charlist), do: count_runs(hd(charlist), tl(charlist), 1, '')
 
-  defp count_runs(current_char, '', count, runs), do: runs ++ [{current_char, count}]
-  defp count_runs(current_char, remaining, count, runs) do
+  defp count_runs(current_char, '', count, code), do: [[Integer.to_charlist(count) | [current_char | code]]]
+  defp count_runs(current_char, remaining, count, code) do
     cond do
-      current_char == hd(remaining) -> count_runs(current_char, tl(remaining), count + 1, runs)
-      current_char != hd(remaining) -> count_runs(hd(remaining), tl(remaining), 1, runs ++ [{current_char, count}])
+      current_char == hd(remaining) -> count_runs(current_char, tl(remaining), count + 1, code)
+      current_char != hd(remaining) -> count_runs(hd(remaining), tl(remaining), 1, [[Integer.to_charlist(count) | [current_char | code]]])
     end
-  end
-
-  defp runs_to_string(runs) do
-    runs |> Enum.map(fn 
-      {char, count} -> Integer.to_charlist(count) ++ [char]
-    end)
   end
 end
