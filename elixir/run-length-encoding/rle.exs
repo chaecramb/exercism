@@ -15,6 +15,16 @@ defmodule RunLengthEncoder do
     |> do_encode 
     |> String.Chars.to_string
   end
+
+  @spec dencode(String.t) :: String.t
+  def encode(""), do: ""
+  def encode(string) do
+    string 
+    |> String.to_charlist
+    |> Enum.reverse 
+    |> do_dencode 
+    |> String.Chars.to_string
+  end
   
   defp do_encode(charlist), do: count_runs(hd(charlist), tl(charlist), 1, '')
 
@@ -23,6 +33,16 @@ defmodule RunLengthEncoder do
     cond do
       current_char == hd(remaining) -> count_runs(current_char, tl(remaining), count + 1, code)
       current_char != hd(remaining) -> count_runs(hd(remaining), tl(remaining), 1, [[Integer.to_charlist(count) | [current_char | code]]])
+    end
+  end
+
+  defp do_dencode(charlist), do: convert_runs(hd(charlist), tl(charlist), 1, '')
+
+  defp convert_runs(current_char, '', count, code), do: [[Integer.to_charlist(count) | [current_char | code]]]
+  defp convert_runs(current_char, remaining, count, code) do
+    cond do
+      current_char == hd(remaining) -> convert_runs(current_char, tl(remaining), count + 1, code)
+      current_char != hd(remaining) -> convert_runs(hd(remaining), tl(remaining), 1, [[Integer.to_charlist(count) | [current_char | code]]])
     end
   end
 end
