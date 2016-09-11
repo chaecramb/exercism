@@ -18,3 +18,4 @@ project/boot/
 project/plugins/project/
 .vagrant
 __pycache__/
+elm/*/elm-stuff/
