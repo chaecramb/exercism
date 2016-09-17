@@ -7,7 +7,7 @@ from run_length import encode, decode
 
 
 class WordCountTests(unittest.TestCase):
-
+    
     def test_encode(self):
         self.assertMultiLineEqual('2A3B4C', encode('AABBBCCCC'))
 
