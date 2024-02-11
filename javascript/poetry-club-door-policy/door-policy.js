@@ -61,5 +61,5 @@ export function backDoorResponse(line) {
  * @returns {string} the back door password
  */
 export function backDoorPassword(word) {
-  return frontDoorPassword(word) + ", please";
+  return `${frontDoorPassword(word)}, please`;
 }
